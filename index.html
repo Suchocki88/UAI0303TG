@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 3.3 Teacher's Guide - Understanding AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .scrollable-content {
+            flex: 1;
+            overflow-y: auto;
+            height: 1600px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header .lesson-meta {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .nav-buttons {
+            background: #f8f9fa;
+            padding: 1rem 2rem;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-button {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .nav-button:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content {
+            padding: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section h4 {
+            color: #555;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .success-box {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .tip-box {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .objectives-list {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        
+        .objectives-list ul {
+            margin-left: 1.5rem;
+        }
+        
+        .objectives-list li {
+            margin: 0.75rem 0;
+        }
+        
+        .timeline {
+            background: #fff9e6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .timeline-time {
+            font-weight: bold;
+            color: #f57c00;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+        
+        .timeline-content {
+            flex-grow: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .script-box {
+            background: #fafafa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .script-label {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+        }
+        
+        .print-button {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-weight: 600;
+        }
+        
+        .print-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        @media print {
+            .nav-buttons, .print-button {
+                display: none;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Teacher's Guide: Lesson 3.3</h1>
+            <div class="lesson-meta">
+                <strong>Context and Clarity</strong><br>
+                Chapter 3: Prompt Engineering | Lesson Day | Duration: 50 minutes
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="location.href='#overview'">Overview</button>
+            <button class="nav-button" onclick="location.href='#objectives'">Objectives</button>
+            <button class="nav-button" onclick="location.href='#preparation'">Preparation</button>
+            <button class="nav-button" onclick="location.href='#lesson-flow'">Lesson Flow</button>
+            <button class="nav-button" onclick="location.href='#reveal'">The Reveal</button>
+            <button class="nav-button" onclick="location.href='#facilitation'">Facilitation Tips</button>
+            <button class="nav-button" onclick="location.href='#assessment'">Assessment</button>
+            <button class="nav-button" onclick="location.href='#differentiation'">Differentiation</button>
+        </div>
+        
+        <div class="scrollable-content">
+            <div class="content">
+                
+                <!-- OVERVIEW SECTION -->
+                <section id="overview" class="section">
+                    <h2>🎯 Lesson Overview</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>🔑 The Big Idea</h4>
+                        <p>Lesson 3.3 introduces a counter-intuitive concept: <strong>sometimes providing MORE context makes AI output WORSE.</strong> Through the hummingbird passage comparison, students discover that context can constrain AI to generic patterns, and that strategic sequencing (building accurate foundation first, then transforming) often produces better results than trying to achieve everything in one prompt.</p>
+                    </div>
+                    
+                    <h3>Note on Lesson Type Change</h3>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ Originally Listed as Discussion Day</h4>
+                        <p>The Table of Contents originally listed 3.3 as a Discussion Day, but this lesson contains core conceptual content that students need to learn before they can meaningfully discuss its application. We've redesignated this as a <strong>Lesson Day</strong>.</p>
+                        <p><strong>Students will have extensive opportunity to discuss and apply these concepts</strong> during the four upcoming Lab Days (3.4-3.7), where context decisions become practical troubleshooting challenges.</p>
+                    </div>
+                    
+                    <h3>The Pedagogical Innovation: The "Easier to Write" Question</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ Why This Question Works</h4>
+                        <p>The lesson asks students: <strong>"Which passage was easier to write?"</strong></p>
+                        <p>Students will assume the shorter, punchier version was easier ("It's so simple!"). The reveal—that the academic version was actually easier because it had scaffolding, reference materials, and established patterns—sets up the key insight about strategic sequencing.</p>
+                        <p><strong>This creates cognitive dissonance that drives learning.</strong> Students must revise their assumptions about what makes writing "easy" or "hard."</p>
+                    </div>
+                    
+                    <h3>This Lesson in Context</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ What Students Already Know:</h4>
+                        <ul>
+                            <li>Four basic prompt structures (Lesson 3.2)</li>
+                            <li>The iteration cycle (Lessons 3.1-3.2)</li>
+                            <li>How to evaluate and refine prompts (Lesson 3.2)</li>
+                            <li>That some prompts work better than others</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>🔮 What This Lesson Prepares Students For:</h4>
+                        <ul>
+                            <li><strong>Lesson 3.4:</strong> Developing editorial eye—recognizing quality helps you make context decisions</li>
+                            <li><strong>Lessons 3.5-3.7:</strong> Advanced techniques and troubleshooting that require nuanced context decisions</li>
+                            <li><strong>All future prompting:</strong> Strategic thinking about when to include/withhold context</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- OBJECTIVES SECTION -->
+                <section id="objectives" class="section">
+                    <h2>🎓 Learning Objectives</h2>
+                    
+                    <p>By the end of this lesson, students will be able to:</p>
+                    
+                    <div class="objectives-list">
+                        <ul>
+                            <li><strong>Explain</strong> why sometimes providing more context makes AI output worse (the "context problem")</li>
+                            <li><strong>Distinguish</strong> between situations where context helps versus situations where context constrains AI to generic patterns</li>
+                            <li><strong>Apply</strong> strategic sequencing: building accurate foundations first, then transforming for specific audiences</li>
+                            <li><strong>Recognize</strong> their personal expertise as a tool for evaluating AI output quality</li>
+                            <li><strong>Use</strong> multiple AI instances strategically rather than trying to achieve everything in one prompt</li>
+                            <li><strong>Make informed decisions</strong> about what context to include or withhold based on their goals</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Mastery Point Alignment</h3>
+                    
+                    <div class="highlight-box">
+                        <p>This lesson addresses <strong>Mastery Point 2: Prompt Engineering Fundamentals</strong> and introduces <strong>Mastery Point 3: Strategic AI Collaboration</strong></p>
+                        <ul>
+                            <li><strong>Level 2:</strong> Understands that context affects output and can identify when prompts have too much or too little context</li>
+                            <li><strong>Level 3:</strong> Makes strategic decisions about context based on goals and can use multiple prompts in sequence</li>
+                            <li><strong>Level 4:</strong> Recognizes complex tradeoffs in context decisions and adapts strategies for different types of tasks</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- PREPARATION SECTION -->
+                <section id="preparation" class="section">
+                    <h2>📋 Teacher Preparation</h2>
+                    
+                    <h3>Before Class</h3>
+                    
+                    <div class="objectives-list">
+                        <h4>Materials to Prepare:</h4>
+                        <ul>
+                            <li>Display capability for showing the two hummingbird passages side-by-side</li>
+                            <li>Whiteboard/chart paper for capturing student observations</li>
+                            <li>Student field journals</li>
+                            <li>Timer for reading/reflection periods</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="objectives-list">
+                        <h4>Key Preparation Steps:</h4>
+                        <ul>
+                            <li><strong>Read both passages aloud to yourself</strong> - Experience the difference viscerally so you can guide students through it</li>
+                            <li><strong>Prepare your own example</strong> - Think of a time when providing too much context hurt communication in your life</li>
+                            <li><strong>Review the decision framework</strong> - Be ready to help students apply the "include or withhold context" principles</li>
+                            <li><strong>Anticipate resistance</strong> - Some students will resist the idea that "less information can be better"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ Critical Preparation: The Reveal Timing</h4>
+                        <p>The lesson's power comes from students experiencing the passages BEFORE understanding why they're different. <strong>Do not preview the lesson's main point.</strong> Let them read, react, then discover.</p>
+                        <p>If you explain "we're learning about context decisions" before they read, you ruin the surprise and reduce engagement.</p>
+                    </div>
+                    
+                    <h3>Anticipating Student Reactions</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Expected Reaction</th>
+                                <th>Why It Happens</th>
+                                <th>How to Respond</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>"Passage 2 is obviously better"</strong></td>
+                                <td>Students immediately prefer engaging content</td>
+                                <td>"Yes! Now think: why is it better? What specifically makes it work?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"Passage 1 is more informative"</strong></td>
+                                <td>Some students equate "more words" with "more learning"</td>
+                                <td>"Did you actually learn more facts from Passage 1? Or did you just encounter more words? What do you remember from each?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"They're for different purposes"</strong></td>
+                                <td>Smart observation—accurate but incomplete</td>
+                                <td>"Great observation! But here's what's interesting: they contain the same information. So why do they feel so different?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"Wait, the academic one was easier?"</strong></td>
+                                <td>Cognitive dissonance from the reveal</td>
+                                <td>"I know it seems backwards! Let's talk about why having more scaffolding and patterns can actually make something easier to produce, even if it's harder to read."</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <!-- LESSON FLOW SECTION -->
+                <section id="lesson-flow" class="section">
+                    <h2>⏱️ Lesson Flow & Timeline</h2>
+                    
+                    <div class="timeline">
+                        <h3>Suggested 50-Minute Structure</h3>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:00-0:02<br>(2 min)</div>
+                            <div class="timeline-content">
+                                <strong>Opening: Frame the Activity</strong>
+                                <ul>
+                                    <li>"Today we're starting with reading, not talking"</li>
+                                    <li>No preview of the lesson's purpose</li>
+                                    <li>Set expectation: just read and notice your reactions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:02-0:10<br>(8 min)</div>
+                            <div class="timeline-content">
+                                <strong>Reading & Initial Reaction</strong>
+                                <ul>
+                                    <li>Students read both passages silently (5 min)</li>
+                                    <li>Quick think-pair-share: initial reactions (3 min)</li>
+                                    <li>Don't discuss differences deeply yet—just gather impressions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:10-0:15<br>(5 min)</div>
+                            <div class="timeline-content">
+                                <strong>The "Easier to Write" Question</strong>
+                                <ul>
+                                    <li>Pose the question: "Which was easier to write?"</li>
+                                    <li>Take quick poll—most will say Passage 2</li>
+                                    <li>Build anticipation: "Interesting. Let's see if you're right..."</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:15-0:25<br>(10 min)</div>
+                            <div class="timeline-content">
+                                <strong>The Reveal: Building in Stages</strong>
+                                <ul>
+                                    <li>Explain: Passage 1 was easier because of scaffolding</li>
+                                    <li>Show the two-stage process with actual prompts</li>
+                                    <li>Connect to strategic sequencing concept</li>
+                                    <li>Address cognitive dissonance: "I know this seems backwards..."</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:25-0:35<br>(10 min)</div>
+                            <div class="timeline-content">
+                                <strong>The Context Problem: When More = Worse</strong>
+                                <ul>
+                                    <li>Explain how academic context triggers generic patterns</li>
+                                    <li>Teach "Context Helps" vs "Context Hurts" framework</li>
+                                    <li>Provide concrete examples of each</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:35-0:42<br>(7 min)</div>
+                            <div class="timeline-content">
+                                <strong>Personal Expertise as Tool</strong>
+                                <ul>
+                                    <li>Connect to students' own areas of knowledge</li>
+                                    <li>Quick examples of recognizing generic vs. specific output</li>
+                                    <li>Link to creative writing project: they're experts on their stories</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:42-0:48<br>(6 min)</div>
+                            <div class="timeline-content">
+                                <strong>Decision Framework & Strategic Patterns</strong>
+                                <ul>
+                                    <li>Quick overview of decision questions</li>
+                                    <li>Introduce 2-3 strategic patterns (Narrow→Broad, etc.)</li>
+                                    <li>Preview how students will apply this in upcoming labs</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">0:48-0:50<br>(2 min)</div>
+                            <div class="timeline-content">
+                                <strong>Closing & Field Journal</strong>
+                                <ul>
+                                    <li>One-sentence summary from students: "The key insight is..."</li>
+                                    <li>Field journal prompt: Examples where less context might work better</li>
+                                    <li>Preview tomorrow: developing editorial eye</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>⏰ Timing Flexibility</h4>
+                        <p><strong>For 40-45 minute periods:</strong> Reduce reading time to 4 min (read one passage together, one independently). Combine strategic patterns with decision framework (1 combined section). Still protect the reveal—that's the heart of the lesson.</p>
+                        <p><strong>For 60+ minute periods:</strong> Add discussion after the reveal (students share their reactions to the cognitive dissonance). Include more strategic pattern examples. Have students start applying the framework to their creative project context decisions.</p>
+                    </div>
+                </section>
+                
+                <!-- REVEAL SECTION -->
+                <section id="reveal" class="section">
+                    <h2>🎭 Teaching The Reveal</h2>
+                    
+                    <h3>Setting Up the Question</h3>
+                    
+                    <div class="script-box">
+                        <div class="script-label">SUGGESTED SCRIPT</div>
+                        <p>"You've read both passages. You've noticed they're very different. Now I want you to think about this question:"</p>
+                        <p>[Write on board: WHICH PASSAGE WAS EASIER TO WRITE?]</p>
+                        <p>"Don't overthink it. Just based on what you see, which one do you think was easier for the authors to create? I'm going to give you 30 seconds to decide."</p>
+                        <p>[Wait. Let them think.]</p>
+                        <p>"Okay, show of hands: Who thinks Passage 1—the academic one—was easier?"</p>
+                        <p>[Usually very few hands]</p>
+                        <p>"And who thinks Passage 2—the short, punchy one—was easier?"</p>
+                        <p>[Usually most hands]</p>
+                        <p>"Interesting. Let me tell you what actually happened..."</p>
+                    </div>
+                    
+                    <h3>Delivering the Reveal</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ The Moment of Surprise</h4>
+                        <p><strong>Don't rush this.</strong> The cognitive dissonance is valuable. Students are grappling with why the longer, more complex passage was actually easier to produce.</p>
+                        
+                        <p><strong>Key points to emphasize:</strong></p>
+                        <ul>
+                            <li>"Passage 1 was easier because the authors had <strong>scaffolding</strong>"</li>
+                            <li>List what scaffolding means: reference materials, established terminology, clear requirements, familiar patterns</li>
+                            <li>"It's like building with a blueprint and pre-cut materials"</li>
+                            <li>"Passage 2 required something harder: <strong>transformation</strong>"</li>
+                            <li>Transformation requires editorial judgment—knowing what to cut, what to keep, how to create impact</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>Showing the Two Prompts</h3>
+                    
+                    <div class="highlight-box">
+                        <h4>🎯 Make the Prompts Visible</h4>
+                        <p>Put these on the board or screen so students can see the stark difference:</p>
+                        
+                        <p><strong>First AI Instance (Passage 1):</strong><br>
+                        <em>"Write comprehensive academic content about hummingbird adaptation for a college-level biomimicry textbook. Include evolutionary biology, engineering applications, and technical terminology. Ensure accuracy and thoroughness."</em></p>
+                        
+                        <p><strong>Second AI Instance (Passage 2):</strong><br>
+                        <em>"Transform this academic content for high school students. Make it vivid, concrete, and compelling. Cut all jargon. Use short sentences. Create wonder. Make them feel the impossibility of what hummingbirds do."</em></p>
+                        
+                        <p><strong>Point out:</strong> These are completely different tasks given to different AI instances. The second prompt wouldn't work without the first providing the accurate foundation.</p>
+                    </div>
+                    
+                    <h3>Addressing Resistance</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Pushback</th>
+                                <th>What They're Really Asking</th>
+                                <th>Your Response</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>"But Passage 2 is shorter—that's always easier!"</strong></td>
+                                <td>"I'm confused by this reversal"</td>
+                                <td>"Shorter doesn't mean easier. It's harder to be concise while maintaining accuracy. Every word in Passage 2 had to be chosen carefully. Passage 1 could ramble because there was room."</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"Couldn't you just write Passage 2 directly?"</strong></td>
+                                <td>"Why do we need two steps?"</td>
+                                <td>"Try it. Ask AI for 'engaging high school content about hummingbirds.' You'll probably get something entertaining but potentially inaccurate or incomplete. The academic foundation ensures you're building on solid ground."</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"This seems like extra work"</strong></td>
+                                <td>"Is this worth the effort?"</td>
+                                <td>"Sometimes it is extra work—but it's strategic. When accuracy matters AND you need engaging content, two stages works better than one. For casual stuff? One prompt is fine. For important content? Build foundations."</td>
+                            </tr>
+                            <tr>
+                                <td><strong>"I still think Passage 2 would be easier"</strong></td>
+                                <td>"I'm not convinced"</td>
+                                <td>"Fair enough. Here's a challenge: tonight, try writing a vivid, accurate, engaging paragraph about something you don't know well. Then try writing a dry, academic paragraph about it using a textbook as reference. Which was easier?"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                
+                <!-- FACILITATION SECTION -->
+                <section id="facilitation" class="section">
+                    <h2>💡 Facilitation Tips</h2>
+                    
+                    <h3>Teaching "Context Helps" vs "Context Hurts"</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ Use Concrete Examples</h4>
+                        <p>Don't just tell students the principle—show them with examples they can immediately understand.</p>
+                        
+                        <p><strong>Context Helps Example:</strong></p>
+                        <p>"Imagine asking AI: 'Tell me about the game yesterday.' That's way too vague. But if you say: 'Summarize yesterday's Lakers-Celtics game, focusing on fourth-quarter momentum shifts and Tatum's defensive performance'—now AI knows exactly what you want."</p>
+                        
+                        <p><strong>Context Hurts Example:</strong></p>
+                        <p>"But what if you said: 'Write an academically rigorous, standards-aligned, comprehensive analysis of the Lakers-Celtics game using sports journalism best practices and analytical frameworks while maintaining accessibility for general audiences.' By the time you're done listing requirements, AI defaults to dry, formal patterns."</p>
+                    </div>
+                    
+                    <h3>Connecting to Personal Expertise</h3>
+                    
+                    <div class="highlight-box">
+                        <h4>🎯 Make This Personal</h4>
+                        <p>Students need to see how THEIR knowledge matters.</p>
+                        
+                        <p><strong>Effective prompt:</strong> "Think about something you know way more about than I do. Maybe it's a video game, a sport, a book series, a hobby. You're an expert compared to me."</p>
+                        
+                        <p>"Now imagine I asked AI to write about that topic. Would you immediately recognize if the output was generic? If it was wrong? If it was just reciting obvious facts vs. showing real understanding?"</p>
+                        
+                        <p>"That recognition—that's editorial judgment. And you have it for YOUR areas of expertise. That's why your creative project works—you're the expert on your own story."</p>
+                    </div>
+                    
+                    <h3>Teaching the Strategic Patterns</h3>
+                    
+                    <div class="tip-box">
+                        <h4>🎯 Don't Overwhelm</h4>
+                        <p>The lesson includes four strategic patterns (Narrow→Broad, Brainstorm→Select→Develop, Rough→Refined, Different Perspectives). <strong>You don't need to cover all four deeply.</strong></p>
+                        
+                        <p><strong>Pick 2-3 patterns that:</strong></p>
+                        <ul>
+                            <li>Connect to work students are already doing</li>
+                            <li>Address problems students have encountered</li>
+                            <li>Will be immediately useful in upcoming labs</li>
+                        </ul>
+                        
+                        <p><strong>For most classes, focus on:</strong></p>
+                        <ul>
+                            <li><strong>Narrow→Broad</strong> (foundation → transformation, like the hummingbird example)</li>
+                            <li><strong>Brainstorm→Select→Develop</strong> (useful for creative project work)</li>
+                        </ul>
+                        
+                        <p>Students will discover and practice the others during labs.</p>
+                    </div>
+                    
+                    <h3>Managing the Conceptual Load</h3>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ This Is a Concept-Heavy Lesson</h4>
+                        <p>Students are learning:</p>
+                        <ul>
+                            <li>The context problem (counter-intuitive)</li>
+                            <li>Strategic sequencing (new approach)</li>
+                            <li>Multiple AI instances (new technique)</li>
+                            <li>Decision frameworks (judgment skills)</li>
+                            <li>Strategic patterns (multiple approaches)</li>
+                        </ul>
+                        
+                        <p><strong>You don't need students to master all of this today.</strong> The goal is introduction and understanding. Mastery comes through practice in the lab days.</p>
+                        
+                        <p><strong>If students seem overwhelmed:</strong></p>
+                        <ul>
+                            <li>"This is a lot of new ideas. The important takeaway: context can help OR hurt, and you get to make strategic decisions about it."</li>
+                            <li>"You'll practice these ideas extensively in our next four lab days. Today is about understanding the concept. Practice comes next."</li>
+                            <li>"Don't worry about memorizing every pattern. Focus on the principle: sometimes two simpler prompts beat one complex prompt."</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- ASSESSMENT SECTION -->
+                <section id="assessment" class="section">
+                    <h2>📊 Assessment Strategies</h2>
+                    
+                    <h3>Formative Assessment During the Lesson</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>What to Listen For</th>
+                                <th>Evidence of Understanding</th>
+                                <th>What It Tells You</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Initial reactions to passages</strong></td>
+                                <td>"Passage 1 is so boring" "Passage 2 makes me want to know more"</td>
+                                <td>Student can distinguish engaging from dry content—foundation for editorial judgment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Response to "easier to write" question</strong></td>
+                                <td>Makes a choice and can articulate reasoning, even if wrong initially</td>
+                                <td>Student is thinking critically about production process, not just consumption</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reaction to reveal</strong></td>
+                                <td>"Wait, that doesn't make sense... oh, but if you have references..." [working through cognitive dissonance]</td>
+                                <td>Student is grappling with the concept genuinely, revising assumptions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Application to personal context</strong></td>
+                                <td>Can identify a topic they know well and explain how they'd recognize generic output</td>
+                                <td>Student connects abstract concept to concrete, personal application</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Discussion Question responses</strong></td>
+                                <td>Thoughtful analysis of when to include/withhold context with specific reasoning</td>
+                                <td>Student understands principle well enough to apply it to new scenarios</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Assessing Discussion Questions 6 & 7</h3>
+                    
+                    <div class="highlight-box">
+                        <h4>📝 Question 6: Context Decisions in Personal Expertise</h4>
+                        
+                        <p><strong>What to look for:</strong></p>
+                        <ul>
+                            <li><strong>Demonstrates understanding:</strong> Recognizes that context can constrain AI to generic patterns</li>
+                            <li><strong>Makes specific choices:</strong> Names concrete context they would include/withhold</li>
+                            <li><strong>Shows reasoning:</strong> Explains WHY certain context helps vs. hurts</li>
+                            <li><strong>Connects to their work:</strong> References their creative project or genuine expertise</li>
+                        </ul>
+                        
+                        <p><strong>Strong response example:</strong></p>
+                        <p><em>"In my story about a Mars colony, I'd tell AI that my character Sofia is an engineer who questions authority. But I wouldn't say 'this explores themes of individualism vs. collectivism in isolated communities' because that might make AI write heavy-handed philosophical dialogue. I want the themes to emerge naturally from Sofia's choices, not from AI trying to sound intellectual."</em></p>
+                        
+                        <p><strong>This question assesses:</strong> Application and strategic thinking</p>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4>📝 Question 7: Scenario Analysis</h4>
+                        
+                        <p><strong>What to look for:</strong></p>
+                        <ul>
+                            <li><strong>Makes clear choice:</strong> Picks one option and commits</li>
+                            <li><strong>Explains tradeoffs:</strong> Shows awareness other options have merit in different situations</li>
+                            <li><strong>Considers context:</strong> Recognizes when their choice might NOT be best</li>
+                            <li><strong>Uses lesson concepts:</strong> References conflicting priorities, strategic sequencing, etc.</li>
+                        </ul>
+                        
+                        <p><strong>Strong response example:</strong></p>
+                        <p><em>"For the creative story scenario, I'd choose Option C—two prompts in sequence. Option B gives AI too many conflicting constraints (she's uncomfortable but direct, he deflects but is professional, they're both right but protocols complicate...). That's like the 'scary but not too scary' problem we learned about. By splitting it, the first prompt gets the situation right, the second refines for character voices. Option B might work if I already had a really clear vision of the exact dialogue, but Option C gives me more flexibility."</em></p>
+                        
+                        <p><strong>This question assesses:</strong> Analytical thinking and nuanced decision-making</p>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h4>✅ Remember: Discussion Questions Have No Single Right Answer</h4>
+                        <p>Evaluate based on <strong>quality of reasoning</strong>, not whether students arrive at a particular conclusion. Look for evidence that they're thinking strategically about context decisions rather than following a formula.</p>
+                    </div>
+                </section>
+                
+                <!-- DIFFERENTIATION SECTION -->
+                <section id="differentiation" class="section">
+                    <h2>🎨 Differentiation Strategies</h2>
+                    
+                    <h3>For Students Who Struggle With Abstract Concepts</h3>
+                    
+                    <div class="objectives-list">
+                        <ul>
+                            <li><strong>Use more concrete examples:</strong> Sports, cooking, gaming—whatever they know well</li>
+                            <li><strong>Draw the two-stage process visually:</strong> Box 1 (accurate foundation) → Box 2 (transform for audience)</li>
+                            <li><strong>Connect to their creative project specifically:</strong> "In YOUR story, what context would help AI vs. constrain it?"</li>
+                            <li><strong>Provide sentence frames:</strong> "I would include ___ because ___. I would withhold ___ because ___."</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>For Advanced Students</h3>
+                    
+                    <div class="objectives-list">
+                        <ul>
+                            <li><strong>Challenge with edge cases:</strong> "When might withholding context backfire? When might the two-stage approach be inefficient?"</li>
+                            <li><strong>Meta-analysis:</strong> "How does this principle apply to human-to-human communication? When do YOU provide too much context?"</li>
+                            <li><strong>Extended patterns:</strong> "Can you design a three-stage or four-stage process for complex content creation?"</li>
+                            <li><strong>Research connection:</strong> "Look up 'prompt engineering' research. What do experts say about context?"</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>For Students Who Resist the Concept</h3>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ Some Students Will Push Back</h4>
+                        <p>"More information is always better" is deeply ingrained. Some students will resist the idea that less can be more.</p>
+                        
+                        <p><strong>Don't argue—invite experimentation:</strong></p>
+                        <ul>
+                            <li>"I get your skepticism. Here's what I want you to do in the next lab: try both approaches. Give AI everything upfront in one prompt, then try the two-stage approach. Document which works better for YOUR project."</li>
+                            <li>"You might be right that more context works for you. The principle isn't 'always withhold context'—it's 'make strategic decisions.' Test it yourself."</li>
+                            <li>"The hummingbird example worked this way. That doesn't mean every situation does. You're learning to recognize when each approach fits."</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>For ELL Students</h3>
+                    
+                    <div class="objectives-list">
+                        <ul>
+                            <li><strong>Visual support:</strong> Show the passages with color-coding (technical terms in one color, vivid language in another)</li>
+                            <li><strong>Paired reading:</strong> Let them read with a partner who can clarify Passage 1's academic language</li>
+                            <li><strong>Translation insight:</strong> Connect to their experience—translation often requires transformation, not word-for-word</li>
+                            <li><strong>Simplified framework:</strong> "Two questions: 1) Does AI need this to be accurate? 2) Will this make AI sound too formal?"</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>For Students With Writing Anxiety</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ This Lesson Can Be Empowering</h4>
+                        <p>Students who struggle with writing often worry they can't direct AI effectively because "I'm not a good writer."</p>
+                        
+                        <p><strong>Explicit messaging:</strong></p>
+                        <ul>
+                            <li>"The hummingbird example shows that editorial transformation is a DIFFERENT skill from academic writing. You might find you're better at creating Passage 2 than Passage 1."</li>
+                            <li>"Recognizing engaging content doesn't require you to write it yourself. You already know what's boring vs. interesting—that's editorial judgment."</li>
+                            <li>"The two-stage approach means you can build accuracy first (with AI's help), then focus purely on making it engaging. You don't have to do everything at once."</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- CONNECTIONS SECTION -->
+                <section id="connections" class="section">
+                    <h2>🔗 Connections & Extensions</h2>
+                    
+                    <h3>Connections to Other Lessons</h3>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Lesson</th>
+                                <th>How 3.3 Connects</th>
+                                <th>What to Reference</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>3.2: Basic Prompt Structures</strong></td>
+                                <td>Students learned WHAT structures exist; now learning WHEN to apply them</td>
+                                <td>"Remember the four prompt structures? Context decisions affect which structure works best and how you use it."</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.4: Recognizing Good Output</strong></td>
+                                <td>Tomorrow students develop the editorial eye that lets them make context decisions</td>
+                                <td>"You can't make good context decisions without recognizing quality. Tomorrow we focus on developing that recognition."</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3.5-3.7: Labs</strong></td>
+                                <td>Students will apply context principles during troubleshooting and experimentation</td>
+                                <td>"When prompts aren't working in labs, ask: is this a context problem? Too much? Too little? Wrong type?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Creative Project</strong></td>
+                                <td>Students are experts on their stories—perfect for applying personal expertise principle</td>
+                                <td>"You know your characters better than AI does. What context do YOU need to provide vs. what would constrain AI?"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h3>Real-World Applications</h3>
+                    
+                    <div class="objectives-list">
+                        <p>Connect context decisions to professional and everyday situations:</p>
+                        <ul>
+                            <li><strong>Job applications:</strong> Resume (comprehensive context) vs. cover letter (transformed for specific role)</li>
+                            <li><strong>Presentations:</strong> Research depth vs. what to actually present to audience</li>
+                            <li><strong>Communication:</strong> When does providing more background help vs. overwhelm?</li>
+                            <li><strong>Teaching:</strong> Teachers do this constantly—deciding what to explain vs. what to let students discover</li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <!-- REFLECTION SECTION -->
+                <section id="reflection" class="section">
+                    <h2>🤔 Post-Lesson Teacher Reflection</h2>
+                    
+                    <div class="highlight-box">
+                        <h4>After Teaching This Lesson, Consider:</h4>
+                        
+                        <div class="objectives-list">
+                            <h4>The Reveal:</h4>
+                            <ul>
+                                <li>Did students experience genuine surprise at "Passage 1 was easier"?</li>
+                                <li>How long did it take for the cognitive dissonance to resolve?</li>
+                                <li>What unexpected questions or insights emerged?</li>
+                                <li>Should I adjust timing or explanation for next year?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objectives-list">
+                            <h4>Conceptual Understanding:</h4>
+                            <ul>
+                                <li>Do students grasp "context can constrain"? Or do they still default to "more is better"?</li>
+                                <li>Can students identify when to use strategic sequencing vs. single prompts?</li>
+                                <li>Did the personal expertise connection land? Do students see how THEIR knowledge matters?</li>
+                                <li>Which strategic patterns resonated? Which confused students?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objectives-list">
+                            <h4>Student Reactions:</h4>
+                            <ul>
+                                <li>Which students are excited by this approach? Which are skeptical?</li>
+                                <li>Did any students have "aha" moments? What triggered them?</li>
+                                <li>What resistance did I encounter? How did I handle it?</li>
+                                <li>Which examples worked best for THIS class?</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="objectives-list">
+                            <h4>For Tomorrow (3.4):</h4>
+                            <ul>
+                                <li>Which students need additional support with context decisions?</li>
+                                <li>Who's ready to start applying this in labs?</li>
+                                <li>What examples from today should I reference as students evaluate output quality?</li>
+                                <li>How can I connect editorial eye development to context decisions?</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>📝 Quick Post-Lesson Notes</h4>
+                        <p>Before you forget, jot down:</p>
+                        <ul>
+                            <li>One student response that showed deep understanding</li>
+                            <li>One misconception that emerged unexpectedly</li>
+                            <li>One adjustment that would improve the reveal</li>
+                            <li>One connection to make explicit in tomorrow's lesson</li>
+                        </ul>
+                    </div>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+    
+    <button class="print-button" onclick="window.print()">🖨️ Print Guide</button>
+    
+    <script>
+        // Smooth scrolling for navigation buttons
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const href = this.getAttribute('onclick');
+                if (href && href.includes('#')) {
+                    e.preventDefault();
+                    const targetId = href.match(/#[\w-]+/)[0];
+                    const targetSection = document.querySelector(targetId);
+                    const scrollableContent = document.querySelector('.scrollable-content');
+                    if (targetSection && scrollableContent) {
+                        const offsetTop = targetSection.offsetTop - scrollableContent.offsetTop;
+                        scrollableContent.scrollTo({ top: offsetTop - 20, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
